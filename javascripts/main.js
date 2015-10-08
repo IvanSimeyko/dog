@@ -30,7 +30,7 @@ $(function () {
 
 	// создаем функцию коллбек для submit формы
 	var onSubmitHandler = function (event) {
-		// зановим значение в переменную
+		// заносим значение в переменную
         queryText.set( $query.val() );
 		// отмена действия по умолчанию
         event.preventDefault();
