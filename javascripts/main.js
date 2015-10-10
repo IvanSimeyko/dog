@@ -39,18 +39,52 @@ $(function () {
 	var showBuildingsList = function(response){
 		console.info('showBuildingsList', response);
 
-		var $listingsList = $('#listings-list');
+        var html = '';
+        var existingUl = document.getElementById('result_2');
+        var template = '<li><img src="## img_url ##"><h2><% title %></h2><p>{{ summary }}</p></li>';
 
+        function someFunc (element) {
+            var newLi = template;
+
+            newLi = newLi.replace('## img_url ##', element.img_url);
+            newLi = newLi.replace('<% title %>', element.title);
+            newLi = newLi.replace('{{ summary }}', element.summary);
+
+            html += newLi;
+          }
+          response.listings.forEach(someFunc);
+
+          // добавление fragment в existingUl
+          existingUl.innerHTML = html;
+    };
+		/*var $listingsList = $('#listings-list');
 		var htmlList = $listingsList.html();
-
 		var listingTemplate = _.template( htmlList );
-
 		var newHtml = listingTemplate({
 			items: response.listings
 		});
 
-		$result.html( newHtml );
-	};
+		$result.html( newHtml );*/
+
+
+        /*var listings = response.listings;
+        console.log ('listings= ', listings);
+        //var body = document.body;
+        var fragment = document.createDocumentFragment();
+        var existingUl = document.getElementById('result_2');
+
+        function someFunc (element) {
+            var li = document.createElement('li');
+            var img = document.createElement('img');
+            li.innerHTML = element.title;
+            fragment.appendChild(li);
+            //console.log ('fragment= ', fragment)
+        };
+        listings.forEach(someFunc);
+
+        existingUl.innerHTML='';
+        existingUl.appendChild(fragment)*/
+
 
 	var showLocationsList = function(){
 		console.info('showLocationsList');
