@@ -86,25 +86,26 @@ $(function () {
         existingUl.appendChild(fragment)*/
 
 
-	var showLocationsList = function(){
-		console.info('showLocationsList');
 	var showLocationsList = function (response){
+		console.log ( 'run showLocationsList');
 		var elements = response.locations;
-		var fragment = document.createDocumentFragment();
-		var existingUl = document.getElementById('result_2');
-		function someFunc (element) {
-			var li = document.createElement('li');
-			var p = document.createElement('p');
-			p.innerHTML = element.long_title;
-			li.appendChild(p);
+        console.log (elements);
+        var fragment = document.createDocumentFragment();
+        var existingUl = document.getElementById('result_2');
 
-			fragment.appendChild(li);
-		}
-		elements.forEach(someFunc);
-		existingUl.innerHTML = '<h2> Возможно вы имели ввиду: </h2>';
-		existingUl.appendChild(fragment);
+        function someFunc (element) {
+            var li = document.createElement('li');
+            li.innerHTML = element.long_title;
+            fragment.appendChild(li);
+        }
+
+        elements.forEach(someFunc);
+
+        existingUl.innerHTML='';
+        existingUl.appendChild(fragment)
+
+
 	};
-    };
 
 	var showErrorList = function(){
 		console.error('showErrorList');
