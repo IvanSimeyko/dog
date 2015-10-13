@@ -107,7 +107,9 @@ $(function () {
                 var hRef =  a.getAttribute('href').slice( 1 );
                 console.log(hRef);
                 // потом это занчение внести в queryText.set( val );
-                queryText.set( hRef);
+                queryText.set( hRef );
+                var inputField = document.getElementById('query');
+                inputField.value = a.innerHTML;
             }, false);
 
             li.appendChild(a);
