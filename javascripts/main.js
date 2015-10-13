@@ -87,6 +87,7 @@ $(function () {
 
 
 	var showLocationsList = function (response){
+
 		console.log ( 'run showLocationsList');
 		var elements = response.locations;
         console.log (elements);
@@ -95,17 +96,29 @@ $(function () {
 
         function someFunc (element) {
             var li = document.createElement('li');
-            li.innerHTML = element.long_title;
+            var a = document.createElement ('a');
+            a.href  = '#' + element.place_name;
+            a.innerHTML = element.long_title;
+            //a.onclick = clickMouse;
+            //console.log (a);
+            li.appendChild(a);
+            //li.innerHTML = element.long_title;
             fragment.appendChild(li);
         }
 
         elements.forEach(someFunc);
 
         existingUl.innerHTML='';
-        existingUl.appendChild(fragment)
+        existingUl.appendChild(fragment);
 
-
-	};
+        dothing2 = function(){
+        console.log('click')
+        };
+        var atr = document.getElementsByName('a');
+        console.log( 'atr= ', atr );
+        //atr.addEventListener ("click", dothing2);
+            // this
+        };
 
 	var showErrorList = function(){
 		console.error('showErrorList');
