@@ -57,6 +57,7 @@ $(function () {
           // добавление fragment в existingUl
           existingUl.innerHTML = html;
     };
+		// еще пару вариантов решения данной фундкции
 		/*var $listingsList = $('#listings-list');
 		var htmlList = $listingsList.html();
 		var listingTemplate = _.template( htmlList );
@@ -99,8 +100,16 @@ $(function () {
             var a = document.createElement ('a');
             a.href  = '#' + element.place_name;
             a.innerHTML = element.long_title;
-            //a.onclick = clickMouse;
-            //console.log (a);
+            a.addEventListener("click", function() {
+                console.log( 'was click' );
+                console.log( a );
+                // получаем значение атрибута href и удаляем из него #
+                var hRef =  a.getAttribute('href').slice( 1 );
+                console.log(hRef);
+                // потом это занчение внести в queryText.set( val );
+                queryText.set( hRef);
+            }, false);
+
             li.appendChild(a);
             //li.innerHTML = element.long_title;
             fragment.appendChild(li);
@@ -111,13 +120,6 @@ $(function () {
         existingUl.innerHTML='';
         existingUl.appendChild(fragment);
 
-        dothing2 = function(){
-        console.log('click')
-        };
-        var atr = document.getElementsByName('a');
-        console.log( 'atr= ', atr );
-        //atr.addEventListener ("click", dothing2);
-            // this
         };
 
 	var showErrorList = function(){
