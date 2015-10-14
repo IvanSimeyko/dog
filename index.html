@@ -40,6 +40,20 @@
 
     </div>
 
+    <script type="text/template" id="locations-list">
+
+        <ul class="list-unstyled">
+             <%= first %>
+            <% locations.forEach(function(location) {
+              %>
+            <li><a class="location" href="#<%= location.place_name %>" data-place-name="<%= location.place_name %>">
+            <%= location.long_title %>
+            </a></li>
+          <%
+        }); %>
+        </ul>
+        </script>
+
 
     <script type="text/template" id="listings-list">
       <ul class="list-unstyled">

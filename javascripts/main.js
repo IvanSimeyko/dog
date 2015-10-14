@@ -86,8 +86,10 @@ $(function () {
         existingUl.innerHTML='';
         existingUl.appendChild(fragment)*/
 
-    // response_code 200 or 202 - native js
-	var showLocationsList = function (response){
+    // response_code 200 or 202
+    /*
+    // native js
+	    var showLocationsList = function (response){
 		console.log ( 'run showLocationsList');
         console.log( 'response = ', response );
 		var elements = response.locations;
@@ -122,6 +124,27 @@ $(function () {
         //existingUl.innerHTML='';
         existingUl.appendChild(fragment);
     };
+    */
+
+    // // response_code 200 or 202
+    // underscore.js
+    var showLocationsList = function(response){
+		// response.locations
+		// $result
+		console.info('showLocationsList', response.locations);
+        // получили html-фрагмент в виде строки
+		var htmlTemplate = $('#locations-list').html();
+        console.log( 'htmlTemplate= ', htmlTemplate );
+
+		var funcTemplate = _.template(htmlTemplate);
+
+		var newHtmlTemplate = funcTemplate({
+			locations: response.locations,
+			first: '<li>1</li>'
+		});
+
+		$result.html( newHtmlTemplate );
+	};
 
     // response_code 201 - native js
 	var showErrorList = function(response){
