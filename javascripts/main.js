@@ -57,6 +57,7 @@ $(function () {
           // добавление fragment в existingUl
           existingUl.innerHTML = html;
     };
+		// еще пару вариантов решения данной фундкции
 		/*var $listingsList = $('#listings-list');
 		var htmlList = $listingsList.html();
 		var listingTemplate = _.template( htmlList );
@@ -85,10 +86,10 @@ $(function () {
         existingUl.innerHTML='';
         existingUl.appendChild(fragment)*/
 
-
+    // response_code 200 or 202 - native js
 	var showLocationsList = function (response){
-
 		console.log ( 'run showLocationsList');
+        console.log( 'response = ', response );
 		var elements = response.locations;
         console.log (elements);
         var fragment = document.createDocumentFragment();
@@ -99,29 +100,44 @@ $(function () {
             var a = document.createElement ('a');
             a.href  = '#' + element.place_name;
             a.innerHTML = element.long_title;
-            //a.onclick = clickMouse;
-            //console.log (a);
+
+            a.addEventListener("click", function() {
+                console.log( 'was click the link' );
+                console.log( a );
+                // получаем значение атрибута href и удаляем из него #
+                var hRef =  a.getAttribute('href').slice( 1 );
+                console.log(hRef);
+                // потом это занчение внести в queryText.set( val );
+                queryText.set( hRef );
+                //меняем значение города в форме
+                var inputField = document.getElementById('query');
+                inputField.value = a.innerHTML;
+            }, false);
+
             li.appendChild(a);
-            //li.innerHTML = element.long_title;
             fragment.appendChild(li);
         }
 
         elements.forEach(someFunc);
-
-        existingUl.innerHTML='';
+        //existingUl.innerHTML='';
         existingUl.appendChild(fragment);
+    };
 
-        dothing2 = function(){
-        console.log('click')
-        };
-        var atr = document.getElementsByName('a');
-        console.log( 'atr= ', atr );
-        //atr.addEventListener ("click", dothing2);
-            // this
-        };
-
-	var showErrorList = function(){
-		console.error('showErrorList');
+    // response_code 201 - native js
+	var showErrorList = function(response){
+        console.log('showErrorList');
+        console.log( response );
+        var answer = response.application_response_text;
+        //console.log( 'answer= ', answer );
+        var li = document.createElement( 'li' );
+        var p = document.createElement( 'p' );
+        var fragment = document.createDocumentFragment();
+        var existingUl = document.getElementById('result_2');
+        p.innerHTML = 'your request did not produce results. The response from the server - ' + answer;
+        li.appendChild(p);
+        fragment.appendChild(li);
+        //existingUl.innerHTML='';
+        existingUl.appendChild(fragment);
 	};
 
 	var onChangeQueryText = function (event, text) {
