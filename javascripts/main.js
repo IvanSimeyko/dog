@@ -126,7 +126,7 @@ $(function () {
     };
     */
 
-    // // response_code 200 or 202
+    // response_code 200 or 202
     // underscore.js
     var showLocationsList = function(response){
 		// response.locations
@@ -146,7 +146,8 @@ $(function () {
 		$result.html( newHtmlTemplate );
 	};
 
-    // response_code 201 - native js
+    // response_code 201
+   /* // native js
 	var showErrorList = function(response){
         console.log('showErrorList');
         console.log( response );
@@ -161,6 +162,26 @@ $(function () {
         fragment.appendChild(li);
         //existingUl.innerHTML='';
         existingUl.appendChild(fragment);
+	};*/
+
+    // response_code 201
+    // underscore.js
+    var showErrorList = function(response){
+		// response.locations
+		// $result
+		console.info('showErrorList', response.application_response_text);
+        // получили html-фрагмент в виде строки
+		var htmlTemplate = $('#error-list').html();
+        console.log( 'htmlTemplate= ', htmlTemplate );
+
+		var funcTemplate = _.template(htmlTemplate);
+
+		var newHtmlTemplate = funcTemplate({
+			locations: response.application_response_text,
+			first: '<li>1</li>'
+		});
+
+		$result.html( newHtmlTemplate );
 	};
 
 	var onChangeQueryText = function (event, text) {
