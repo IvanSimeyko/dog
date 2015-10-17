@@ -56,6 +56,12 @@ $(function () {
 
           // добавление fragment в existingUl
           existingUl.innerHTML = html;
+
+         //
+         //localStorage.setItem("successLocations", text);
+         //localStorage.getItem("successLocations");
+         //JSON.stringify
+         //JSON.parse
     };
 		// еще пару вариантов решения данной фундкции
 		/*var $listingsList = $('#listings-list');
@@ -193,8 +199,23 @@ $(function () {
 				case '101':
 				case '110':
 					showBuildingsList(data.response);
-				break;
-				case '200':
+
+                    // saveToLocastorage(text)
+                    var fromLocal = JSON.parse( localStorage.getItem("successLocations") );
+                    console.log( fromLocal );
+                    if ( !fromLocal ) { // !null === true
+                        fromLocal = [];
+                    }
+                   // get data for localstorage
+                    var text = data.request.location;
+                    // push in fromlocal
+                    fromLocal.push( text );
+                    // stringify
+                    var json = JSON.stringify( fromLocal );
+                    // entry in LocalStorage
+                    localStorage.setItem("successLocations", json);
+                    break;
+                case '200':
 				case '202':
 					showLocationsList(data.response);
 				break;
