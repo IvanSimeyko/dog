@@ -86,11 +86,15 @@ $(function () {
         var existingUl = document.getElementById('result_2');
 
         function someFunc (element) {
+            var div = document.createElement('div');
+            div.className = 'container';
             var li = document.createElement('li');
             var img = document.createElement('img');
             var h2 = document.createElement('h2');
 			var p1 = document.createElement('p');
 			var p2 = document.createElement('p');
+            var button = document.createElement("input");
+            var hr = document.createElement("hr");
 
             img.src = element.img_url;
 			li.appendChild(img);
@@ -104,7 +108,17 @@ $(function () {
 			p2.innerHTML = element.summary;
 			li.appendChild(p2);
 
-            fragment.appendChild(li);
+            button.type = "button";
+            button.value = "I liked";
+            button.onclick = function(){
+                alert('blabla')
+            };
+            li.appendChild(button);
+
+            li.appendChild(hr);
+
+            div.appendChild(li);
+            fragment.appendChild(div);
             //console.log ('fragment= ', fragment)
         }
         elements.forEach(someFunc);
