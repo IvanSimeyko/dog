@@ -105,14 +105,23 @@ $(function () {
 			p1.innerHTML = element.title;
 			li.appendChild(p1);
 
-			p2.innerHTML = element.summary;
+			p2.innerHTML =
 			li.appendChild(p2);
 
             button.type = "button";
             button.value = "I liked";
             button.onclick = function(){
-                alert('blabla')
+               var object = {};
+                object.img = element.img_url;
+                object.price_formatted = element.price_formatted;
+                object.title = element.title;
+                object.summary = element.summary;
+                console.log( object );
+                var json = JSON.stringify( object );
+                // entry in LocalStorage
+                localStorage.setItem('object', json);
             };
+
             li.appendChild(button);
 
             li.appendChild(hr);
