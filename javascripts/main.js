@@ -36,6 +36,42 @@ $(function () {
         event.preventDefault();
 	};
 
+    //show data from localStorage
+    var showDataFromLocalStorage = function() {
+        console.log('showDataFromLocalStorage');
+        var elements = JSON.parse( localStorage.getItem("successLocations") );
+        console.log (elements);
+        var fragment = document.createDocumentFragment();
+        var existingUl = document.getElementById('result_2');
+
+        if (elements) {
+        for (var i = 0; i < elements.length; i++) {
+            var li = document.createElement('li');
+            var a = document.createElement ('a');
+            a.href  =  '#' + elements[i];
+            a.innerHTML = elements[i];
+
+            a.addEventListener("click", function() {
+                console.log( 'was click the link' );
+                // получаем значение атрибута href и удаляем из него #
+                var hRef =  a.getAttribute('href').slice( 1 );
+                console.log(hRef);
+                // потом это занчение внести в queryText.set( val );
+                queryText.set( hRef );
+                //меняем значение города в форме
+                var inputField = document.getElementById('query');
+                inputField.value = a.innerHTML;
+            }, false);
+
+            li.appendChild(a);
+            fragment.appendChild(li);
+        }
+        }
+        existingUl.appendChild(fragment);
+    };
+
+    showDataFromLocalStorage();
+
 	var showBuildingsList = function(response){
 		console.info('showBuildingsList', response);
 
@@ -64,6 +100,7 @@ $(function () {
          //JSON.parse
     };
 		// еще пару вариантов решения данной фундкции
+		// jQuery
 		/*var $listingsList = $('#listings-list');
 		var htmlList = $listingsList.html();
 		var listingTemplate = _.template( htmlList );
@@ -74,6 +111,7 @@ $(function () {
 		$result.html( newHtml );*/
 
 
+        // native js
         /*var listings = response.listings;
         console.log ('listings= ', listings);
         //var body = document.body;
@@ -209,7 +247,9 @@ $(function () {
                    // get data for localstorage
                     var text = data.request.location;
                     // push in fromlocal
-                    fromLocal.push( text );
+                    if ( fromLocal.indexOf(text) === -1 ){
+                        fromLocal.push( text );
+                    }
                     // stringify
                     var json = JSON.stringify( fromLocal );
                     // entry in LocalStorage
@@ -231,6 +271,7 @@ $(function () {
 	};
 
 	$searhForm.on('submit', onSubmitHandler);
-	$query.on('querytext:change', onChangeQueryText);
+	// действие при событи querytext:change
+    $query.on('querytext:change', onChangeQueryText);
 
 });
