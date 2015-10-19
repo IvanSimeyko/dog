@@ -109,7 +109,7 @@ $(function () {
 			li.appendChild(p2);
 
             button.type = "button";
-            button.value = "I liked";
+            button.value = "I like";
             button.onclick = function(){
                var object = {};
                 object.img = element.img_url;
@@ -119,7 +119,9 @@ $(function () {
                 console.log( object );
                 var json = JSON.stringify( object );
                 // entry in LocalStorage
-                localStorage.setItem('object', json);
+                localStorage.setItem(element.title, json);
+
+                button.value = "I don't like";
             };
 
             li.appendChild(button);
