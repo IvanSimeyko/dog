@@ -36,16 +36,22 @@ $(function () {
         event.preventDefault();
 	};
 
+
+    // add variable for localStorage
+    var fromLocal = JSON.parse( localStorage.getItem("successLocations") );
+    //console.log( fromLocal );
+    if ( !fromLocal ) { // !null === true
+        fromLocal = [];
+        //console.log( fromLocal );
+    }
     //show data from localStorage
     var showDataFromLocalStorage = function() {
         console.log('showDataFromLocalStorage');
-        var array = JSON.parse( localStorage.getItem("successLocations") );
-        console.log (array);
         var fragment = document.createDocumentFragment();
         var existingUl = document.getElementById('result_2');
 
-        if (array) {
-            function someFunc (element, index, array) {
+
+        function someFunc (element, index, fromLocal) {
             var li = document.createElement('li');
             var a = document.createElement ('a');
             a.href  =  '#' + element;
@@ -66,26 +72,24 @@ $(function () {
             li.appendChild(a);
             fragment.appendChild(li);
         }
-        }
-        array.forEach(someFunc);
+
+        fromLocal.forEach(someFunc);
         existingUl.innerHTML='';
         existingUl.appendChild(fragment);
-
     };
 
     showDataFromLocalStorage();
-
     // response_code 100 or 101 or 110
     // native js
 	var showBuildingsList = function(response){
         console.log ( 'run showBuildingsList');
         // native js
         var elements  = response.listings;
-        console.log ('listings= ', elements);
+        console.log ('elements= ', elements);
         var fragment = document.createDocumentFragment();
         var existingUl = document.getElementById('result_2');
 
-        function someFunc (element) {
+        function someFunc (element, index) {
             var div = document.createElement('div');
             div.className = 'container';
             var li = document.createElement('li');
@@ -105,25 +109,30 @@ $(function () {
 			p1.innerHTML = element.title;
 			li.appendChild(p1);
 
-			p2.innerHTML =
+			p2.innerHTML = element.summary;
 			li.appendChild(p2);
 
             button.type = "button";
             button.value = "I like";
             button.onclick = function(){
-               var object = {};
-                object.img = element.img_url;
-                object.price_formatted = element.price_formatted;
-                object.title = element.title;
-                object.summary = element.summary;
-                console.log( object );
-                var json = JSON.stringify( object );
-                // entry in LocalStorage
-                localStorage.setItem(element.title, json);
-
-                button.value = "I don't like";
+               if (button.value == 'I like') {
+                   var object = {};
+                   object.img = element.img_url;
+                   object.price_formatted = element.price_formatted;
+                   object.title = element.title;
+                   object.summary = element.summary;
+                   console.log( object );
+                   var json = JSON.stringify( object );
+                   // entry in LocalStorage
+                   localStorage.setItem(element.title, json);
+                   // change button value
+                   button.value = "I don't like";
+               } else{
+                   //console.log ( element.title );
+                   localStorage.removeItem( element.title );
+                   button.value = "I like";
+               }
             };
-
             li.appendChild(button);
 
             li.appendChild(hr);
@@ -203,13 +212,6 @@ $(function () {
 				case '101':
 				case '110':
 					showBuildingsList(data.response);
-
-                    // saveToLocastorage(text)
-                    var fromLocal = JSON.parse( localStorage.getItem("successLocations") );
-                    console.log( fromLocal );
-                    if ( !fromLocal ) { // !null === true
-                        fromLocal = [];
-                    }
                    // get data for localstorage
                     var text = data.request.location;
                     // push in fromlocal
