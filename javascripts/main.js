@@ -247,46 +247,51 @@ $(function () {
         var fragment = document.createDocumentFragment();
         var existingUl = document.getElementById('result_2');
 
-        var div = document.createElement('div');
+        function someFunction (element) {
+            var div = document.createElement('div');
             div.className = 'container';
             var li = document.createElement('li');
             var img = document.createElement('img');
             var h2 = document.createElement('h2');
-			var p1 = document.createElement('p');
-			var p2 = document.createElement('p');
-            var button = document.createElement("input");
+            var p1 = document.createElement('p');
+            var p2 = document.createElement('p');
+            //var button = document.createElement("input");
             var hr = document.createElement("hr");
 
+            img.src = element.img;
+            //console.log( img );
+            li.appendChild( img );
+
+            h2.innerHTML = element.price_formatted;
+            li.appendChild(h2);
+
+            p1.innerHTML = element.title;
+            li.appendChild(p1);
+
+            p2.innerHTML = element.summary;
+            li.appendChild(p2);
+
+            /*button.type = "button";
+            button.value = "I don't like";
+            li.appendChild(button);
+            */
+            li.appendChild(hr);
+
+            div.appendChild(li);
+            fragment.appendChild(div);
+        }
+        var objects = [];
         for (var i = 0; i < localStorage.length; i++){
             var element = JSON.parse( localStorage.getItem(localStorage.key(i) ));
-            //console.log( element );
-            if (element != 'successLocations') {
-                img.src = element.img;
-			    console.log ( img );
-                li.appendChild(img);
-
-
-			    /*h2.innerHTML = element.price_formatted;
-			    li.appendChild(h2);
-
-			    p1.innerHTML = element.title;
-			    li.appendChild(p1);
-
-			    p2.innerHTML = element.summary;
-			    li.appendChild(p2);
-
-                button.type = "button";
-                button.value = "I like";
-                li.appendChild(button);
-
-                li.appendChild(hr);*/
-
-                div.appendChild(li);
-                fragment.appendChild(div);
+            if(localStorage.key(i) != 'successLocations') {
+                console.log( element );
+                objects.push( element );
             }
-            existingUl.innerHTML='';
-            existingUl.appendChild(fragment)
-        }
+         }
+        console.log( objects );
+        objects.forEach(someFunction);
+        existingUl.innerHTML='';
+        existingUl.appendChild(fragment)
     }
 });
 
